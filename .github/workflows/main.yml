@@ -55,4 +55,4 @@ jobs:
       with:
         name: case-study-stack
         template: https://weather11.s3.amazonaws.com/cloudformationtemplate.yml
-        no-fail-on-empty-changeset: "1"
+        no-fail-on-empty-changeset: "1" 
