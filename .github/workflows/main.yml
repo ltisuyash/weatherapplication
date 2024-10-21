@@ -34,7 +34,7 @@ jobs:
     - name: Copy artifact to s3 bucket
       run: aws s3 cp ./target/data-0.0.1-SNAPSHOT.jar s3://weather11/
     - name: Copy cloudtemplate to s3 bucket
-      run: aws s3 cp ./cloudformation-template.yaml s3://weather11/
+      run: aws s3 cp ./cloudformationtemplate.yml s3://weather11/
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -53,6 +53,6 @@ jobs:
     - name: Deploy to AWS CloudFormation
       uses: aws-actions/aws-cloudformation-github-deploy@v1
       with:
-        name: weather-app-stack
-        template: https://my-first-latest-bucket.s3.amazonaws.com/cloudformationtemplate.yml
+        name: case-study-stack
+        template: https://weather11.s3.amazonaws.com/cloudformationtemplate.yml
         no-fail-on-empty-changeset: "1"
