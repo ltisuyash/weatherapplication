@@ -13,7 +13,11 @@ import com.example.weatherservice.service.WeatherService;
 @Component
 public class LambdaHandler implements RequestHandler<Map<String, String>, Weather> {
 
-    private final WeatherService weatherService;
+    private WeatherService weatherService;
+
+    public LambdaHandler() {
+        this.weatherService = new WeatherService();
+    }
 
     @Autowired
     public LambdaHandler(WeatherService weatherService) {
