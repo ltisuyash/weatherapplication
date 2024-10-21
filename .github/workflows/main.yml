@@ -65,5 +65,3 @@ jobs:
           no-delete-failed-changeset: "0"
           disable-rollback: "0"
           termination-protection: "0"
-
-
