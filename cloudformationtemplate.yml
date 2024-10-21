@@ -70,7 +70,7 @@ Resources:
       Environment:
         Variables:
           TABLE_NAME: !Ref WeatherData
-      Handler: com.example.WeatherUpdates.StreamLambdaHandler::handleRequest
+      Handler: com.example.weatherservice.LambdaHandler::handleRequest
       MemorySize: 1024
       Role: !GetAtt 
         - WeatherIamUserRole
