@@ -13,7 +13,11 @@ import com.example.weatherservice.service.WeatherService;
 @Component
 public class LambdaHandler implements RequestHandler<Map<String, Object>, Weather> {
 
-    private final WeatherService weatherService;
+    private WeatherService weatherService;
+
+    public LambdaHandler() {
+        // Default constructor required by AWS Lambda
+    }
 
     @Autowired
     public LambdaHandler(WeatherService weatherService) {
