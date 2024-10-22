@@ -15,6 +15,9 @@ public class WeatherService {
     @Autowired
     private WeatherRepository weatherRepository;
 
+    @Autowired
+    private WeatherApi weatherApi;
+
     public Weather getWeatherByCity(String city) {
         return weatherRepository.findByCity(city);
     }
@@ -25,7 +28,7 @@ public class WeatherService {
     }
 
     public Weather fetchAndSaveWeather(String city) {
-        Weather weather = getWeatherByCity(city);
+        Weather weather = weatherApi.getWeather(city);
         if (weather != null) {
             saveWeather(weather);
         }
