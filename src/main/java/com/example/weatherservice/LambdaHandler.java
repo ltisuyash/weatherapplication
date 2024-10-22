@@ -26,7 +26,7 @@ public class LambdaHandler implements RequestHandler<Map<String, Object>, Weathe
         if (headersObj instanceof Map) {
             Map<?, ?> headersMap = (Map<?, ?>) headersObj;
             String city = (String) headersMap.get("city");
-            return weatherService.getWeatherByCity(city);
+            return weatherService.fetchAndSaveWeather(city);
         } else {
             throw new IllegalArgumentException("Invalid headers format");
         }

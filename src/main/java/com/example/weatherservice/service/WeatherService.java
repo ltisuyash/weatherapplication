@@ -18,19 +18,11 @@ public class WeatherService {
     @Autowired
     private WeatherApi weatherApi;
 
-    public Weather getWeatherByCity(String city) {
-        return weatherRepository.findByCity(city);
-    }
-
-    public Weather saveWeather(Weather weather) {
-        logger.info("Saving weather: {}", weather);
-        return weatherRepository.save(weather);
-    }
-
     public Weather fetchAndSaveWeather(String city) {
         Weather weather = weatherApi.getWeather(city);
         if (weather != null) {
-            saveWeather(weather);
+            logger.info("Saving weather: {}", weather);
+            weatherRepository.save(weather);
         }
         return weather;
     }
