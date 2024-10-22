@@ -11,13 +11,9 @@ import com.example.weatherservice.model.Weather;
 import com.example.weatherservice.service.WeatherService;
 
 @Component
-public class LambdaHandler implements RequestHandler<Map<String, String>, Weather> {
+public class LambdaHandler implements RequestHandler<Map<String, Object>, Weather> {
 
-    private WeatherService weatherService;
-
-    public LambdaHandler() {
-        this.weatherService = new WeatherService();
-    }
+    private final WeatherService weatherService;
 
     @Autowired
     public LambdaHandler(WeatherService weatherService) {
@@ -25,8 +21,14 @@ public class LambdaHandler implements RequestHandler<Map<String, String>, Weathe
     }
 
     @Override
-    public Weather handleRequest(Map<String, String> input, Context context) {
-        String city = input.get("city");
-        return weatherService.getWeatherByCity(city);
+    public Weather handleRequest(Map<String, Object> input, Context context) {
+        Object headersObj = input.get("headers");
+        if (headersObj instanceof Map) {
+            Map<?, ?> headersMap = (Map<?, ?>) headersObj;
+            String city = (String) headersMap.get("city");
+            return weatherService.getWeatherByCity(city);
+        } else {
+            throw new IllegalArgumentException("Invalid headers format");
+        }
     }
 }
