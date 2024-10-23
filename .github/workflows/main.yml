@@ -57,7 +57,7 @@ jobs:
       - name: Deploy to AWS CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1
         with:
-          name: case-study-stack-new
+          name: case-study-stack
           template: https://weather11.s3.amazonaws.com/cloudformationtemplate.yml
           no-fail-on-empty-changeset: "1"
           capabilities: CAPABILITY_IAM
