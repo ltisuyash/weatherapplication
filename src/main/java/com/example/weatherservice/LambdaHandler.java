@@ -25,12 +25,12 @@ public class LambdaHandler implements RequestHandler<Map<String, Object>, Weathe
         try {
             context.getLogger().log("Received input: " + input);
             String source = (String) input.get("source");
-            if ("aws.events".equals(source)) {
+          /*  if ("aws.events".equals(source)) {
                 // Handle EventBridge event
                 context.getLogger().log("EventBridge event received");
                 // Process the event as needed
                 return null; // or return a default Weather object
-            } else {
+            } else {*/
                 // Handle API Gateway event
                 Object headersObj = input.get("headers");
                 if (headersObj instanceof Map) {
@@ -42,15 +42,16 @@ public class LambdaHandler implements RequestHandler<Map<String, Object>, Weathe
                         throw new IllegalArgumentException("City cannot be null or empty");
                     }
                     return weatherService.fetchAndSaveWeather(city);
-                } else {
-                    context.getLogger().log("Invalid headers format: " + headersObj);
-                    throw new IllegalArgumentException("Invalid headers format");
-                }
+					/*
+					 * } else { context.getLogger().log("Invalid headers format: " + headersObj);
+					 * throw new IllegalArgumentException("Invalid headers format"); }
+					 */
             }
         } catch (Exception e) {
             // Log the error and return a meaningful response or rethrow the exception
             context.getLogger().log("Error processing request: " + e.getMessage());
             throw e;
         }
+        return null; 
     }
 }
