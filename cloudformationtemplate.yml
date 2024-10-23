@@ -77,6 +77,8 @@ Resources:
         - Arn
       Runtime: java17
       Timeout: 30
+      RuntimeManagementConfig:
+        UpdateRuntimeOn: "Auto"
     DependsOn:
       - WeatherIamUserPolicy
       - WeatherIamUserRole
@@ -114,12 +116,12 @@ Resources:
         - !Ref WeatherLambdaRole
         
   LambdaInvokPermissions:
-          Type: AWS::Lambda::Permission
-          Properties:
-            FunctionName: !Ref WeatherUpdatesLambdaFunction
-            Action: lambda:InvokeFunction
-            Principal: apigateway.amazonaws.com
-            SourceAccount: 844638163682        
+    Type: AWS::Lambda::Permission
+    Properties:
+      FunctionName: !Ref WeatherUpdatesLambdaFunction
+      Action: lambda:InvokeFunction
+      Principal: apigateway.amazonaws.com
+      SourceAccount: 844638163682        
 
   WeatherRestApi:
     Type: 'AWS::ApiGateway::RestApi'
