@@ -23,9 +23,11 @@ public class LambdaHandler implements RequestHandler<Map<String, Object>, Weathe
     @Override
     public Weather handleRequest(Map<String, Object> input, Context context) {
         try {
+            context.getLogger().log("Received input: " + input);
             Object headersObj = input.get("headers");
             if (headersObj instanceof Map) {
                 Map<?, ?> headersMap = (Map<?, ?>) headersObj;
+                context.getLogger().log("Headers map: " + headersMap);
                 String city = (String) headersMap.get("city");
                 if (city == null || city.isEmpty()) {
                     throw new IllegalArgumentException("City cannot be null or empty");
