@@ -22,16 +22,22 @@ public class LambdaHandler implements RequestHandler<Map<String, Object>, Weathe
 
     @Override
     public Weather handleRequest(Map<String, Object> input, Context context) {
-        Object headersObj = input.get("headers");
-        if (headersObj instanceof Map) {
-            Map<?, ?> headersMap = (Map<?, ?>) headersObj;
-            String city = (String) headersMap.get("city");
-            if (city == null || city.isEmpty()) {
-                throw new IllegalArgumentException("City cannot be null or empty");
+        try {
+            Object headersObj = input.get("headers");
+            if (headersObj instanceof Map) {
+                Map<?, ?> headersMap = (Map<?, ?>) headersObj;
+                String city = (String) headersMap.get("city");
+                if (city == null || city.isEmpty()) {
+                    throw new IllegalArgumentException("City cannot be null or empty");
+                }
+                return weatherService.fetchAndSaveWeather(city);
+            } else {
+                throw new IllegalArgumentException("Invalid headers format");
             }
-            return weatherService.fetchAndSaveWeather(city);
-        } else {
-            throw new IllegalArgumentException("Invalid headers format");
+        } catch (Exception e) {
+            // Log the error and return a meaningful response or rethrow the exception
+            context.getLogger().log("Error processing request: " + e.getMessage());
+            throw e;
         }
     }
 }
