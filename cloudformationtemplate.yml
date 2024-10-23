@@ -112,6 +112,14 @@ Resources:
       PolicyName: WeatherLambdaRolePolicy
       Roles:
         - !Ref WeatherLambdaRole
+        
+  LambdaInvokPermissions:
+          Type: AWS::Lambda::Permission
+          Properties:
+            FunctionName: !Ref WeatherUpdatesLambdaFunction
+            Action: lambda:InvokeFunction
+            Principal: apigateway.amazonaws.com
+            SourceAccount: 844638163682        
 
   WeatherRestApi:
     Type: 'AWS::ApiGateway::RestApi'
