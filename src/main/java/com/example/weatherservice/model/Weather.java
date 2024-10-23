@@ -13,6 +13,8 @@ public class Weather {
     @DynamoDBAttribute(attributeName = "temperature")
     private String temperature;
 
+    // Add other fields as needed
+
     public String getCity() {
         return city;
     }
@@ -27,5 +29,13 @@ public class Weather {
 
     public void setTemperature(String temperature) {
         this.temperature = temperature;
+    }
+
+    @Override
+    public String toString() {
+        return "Weather{" +
+                "city='" + city + '\'' +
+                ", temperature='" + temperature + '\'' +
+                '}';
     }
 }

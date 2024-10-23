@@ -13,15 +13,11 @@ import com.example.weatherservice.service.WeatherService;
 @Component
 public class LambdaHandler implements RequestHandler<Map<String, Object>, Weather> {
 
+    @Autowired
     private WeatherService weatherService;
 
     public LambdaHandler() {
         // Default constructor required by AWS Lambda
-    }
-
-    @Autowired
-    public LambdaHandler(WeatherService weatherService) {
-        this.weatherService = weatherService;
     }
 
     @Override
@@ -30,6 +26,9 @@ public class LambdaHandler implements RequestHandler<Map<String, Object>, Weathe
         if (headersObj instanceof Map) {
             Map<?, ?> headersMap = (Map<?, ?>) headersObj;
             String city = (String) headersMap.get("city");
+            if (city == null || city.isEmpty()) {
+                throw new IllegalArgumentException("City cannot be null or empty");
+            }
             return weatherService.fetchAndSaveWeather(city);
         } else {
             throw new IllegalArgumentException("Invalid headers format");
