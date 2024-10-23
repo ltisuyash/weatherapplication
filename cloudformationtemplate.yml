@@ -4,10 +4,10 @@ Resources:
     Properties:
       TableName: Weather
       AttributeDefinitions:
-        - AttributeName: id
+        - AttributeName: city
           AttributeType: S
       KeySchema:
-        - AttributeName: id
+        - AttributeName: city
           KeyType: HASH
       ProvisionedThroughput:
         ReadCapacityUnits: 5
