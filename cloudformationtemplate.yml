@@ -1,3 +1,4 @@
+ 
 Resources:
   WeatherData:
     Type: 'AWS::DynamoDB::Table'
@@ -14,7 +15,6 @@ Resources:
         WriteCapacityUnits: 5
     UpdateReplacePolicy: Retain
     DeletionPolicy: Retain
-
   WeatherIamUserRole:
     Type: 'AWS::IAM::Role'
     Properties:
@@ -31,7 +31,6 @@ Resources:
           - - 'arn:'
             - !Ref 'AWS::Partition'
             - ':iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
-
   WeatherIamUserPolicy:
     Type: 'AWS::IAM::Policy'
     Properties:
@@ -60,12 +59,10 @@ Resources:
       PolicyName: WeatherIamUserPolicy
       Roles:
         - !Ref WeatherIamUserRole
-
   WeatherS3Bucket:
     Type: 'AWS::S3::Bucket'
     Properties:
       BucketName: weather11
-
   WeatherUpdatesLambdaFunction:
     Type: 'AWS::Lambda::Function'
     Properties:
@@ -85,7 +82,6 @@ Resources:
     DependsOn:
       - WeatherIamUserPolicy
       - WeatherIamUserRole
-
   LambdaInvokePermissions:
     Type: 'AWS::Lambda::Permission'
     Properties:
@@ -93,13 +89,11 @@ Resources:
       Action: lambda:InvokeFunction
       Principal: apigateway.amazonaws.com
       SourceAccount: '844638163682'
-
   WeatherRestApi:
     Type: 'AWS::ApiGateway::RestApi'
     Properties:
       Description: This service serves weather data.
       Name: Weather-app-rest-api
-
   WeatherApiResource:
     Type: 'AWS::ApiGateway::Resource'
     Properties:
@@ -108,7 +102,6 @@ Resources:
         - RootResourceId
       PathPart: '{proxy+}'
       RestApiId: !Ref WeatherRestApi
-
   WeatherUpdatesApiMethod:
     Type: 'AWS::ApiGateway::Method'
     Properties:
@@ -121,7 +114,6 @@ Resources:
           'arn:${AWS::Partition}:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${WeatherUpdatesLambdaFunction.Arn}/invocations'
       ResourceId: !Ref WeatherApiResource
       RestApiId: !Ref WeatherRestApi
-
   WeatherApiDeployment:
     Type: 'AWS::ApiGateway::Deployment'
     Properties:
@@ -130,14 +122,12 @@ Resources:
     DependsOn:
       - WeatherUpdatesApiMethod
       - WeatherApiResource
-
   WeatherApiDeploymentStage:
     Type: 'AWS::ApiGateway::Stage'
     Properties:
       DeploymentId: !Ref WeatherApiDeployment
       RestApiId: !Ref WeatherRestApi
       StageName: prod
-
 Outputs:
   WeatherApiEndpoint:
     Value: !Sub 
