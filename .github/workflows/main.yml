@@ -33,6 +33,11 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
 
+      - name: Create S3 bucket
+        run: |
+          aws s3api create-bucket --bucket weather11 --region us-east-1 --create-bucket-configuration LocationConstraint=us-east-1
+        continue-on-error: true
+
       - name: Copy artifact to S3 bucket
         run: aws s3 cp ./target/data-0.0.1-SNAPSHOT.jar s3://weather11/
 
