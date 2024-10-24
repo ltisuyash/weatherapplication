@@ -133,6 +133,53 @@ Resources:
       RestApiId: !Ref WeatherRestApi
       StageName: prod
 
+  WeatherApiEventRulePermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !GetAtt WeatherUpdatesLambdaFunction.Arn
+      Principal: apidestinations.events.amazonaws.com
+      SourceArn: !Join 
+        - ''
+        - - 'arn:'
+          - !Ref 'AWS::Partition'
+          - ':events:'
+          - !Ref 'AWS::Region'
+          - ':'
+          - !Ref 'AWS::AccountId'
+          - ':'
+          - 'rule'
+          - /
+          - '*'
+
+  WeatherEventBus:
+    Type: 'AWS::Events::EventBus'
+    Properties:
+      Name: WeatherEventBus
+
+  WeatherEventBridgeRule:
+    Type: 'AWS::Events::Rule'
+    Properties:
+      ScheduleExpression: rate(5 minutes)
+      State: ENABLED
+      Targets:
+        - Arn: !GetAtt 
+            - WeatherUpdatesLambdaFunction
+            - Arn
+          Id: Target0
+
+  WeatherEventRulePermission:
+    Type: 'AWS::Lambda::Permission'
+    Properties:
+      Action: 'lambda:InvokeFunction'
+      FunctionName: !GetAtt 
+        - WeatherUpdatesLambdaFunction
+        - Arn
+      Principal: events.amazonaws.com
+      SourceArn: !GetAtt 
+        - WeatherEventBridgeRule
+        - Arn
+
 Outputs:
   WeatherApiEndpoint:
     Value: !Sub 
