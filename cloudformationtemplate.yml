@@ -61,11 +61,16 @@ Resources:
       Roles:
         - !Ref WeatherIamUserRole
 
+  WeatherS3Bucket:
+    Type: 'AWS::S3::Bucket'
+    Properties:
+      BucketName: weather11
+
   WeatherUpdatesLambdaFunction:
     Type: 'AWS::Lambda::Function'
     Properties:
       Code:
-        S3Bucket: weather11 
+        S3Bucket: !Ref WeatherS3Bucket
         S3Key: data-0.0.1-SNAPSHOT.jar
       Environment:
         Variables:
