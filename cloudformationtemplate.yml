@@ -87,7 +87,7 @@ Resources:
       FunctionName: !Ref WeatherUpdatesLambdaFunction
       Action: lambda:InvokeFunction
       Principal: apigateway.amazonaws.com
-      SourceAccount: '381491946899'
+      SourceAccount: '608116663849'
 
   WeatherRestApi:
     Type: 'AWS::ApiGateway::RestApi'
