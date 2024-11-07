@@ -1,1 +1,2 @@
-# AWS-Case_study
+# Weather App
+Start with repo
