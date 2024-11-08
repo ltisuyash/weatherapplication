@@ -23,7 +23,7 @@ public class WeatherApi {
     @Value("${weather.api.key}")
     private String apiKey;
 
-    public Weather getWeather(String city) {
+    public Weather getWeather(String city) throws Exception {
         String url = String.format("%s?q=%s&appid=%s", apiUrl, city, apiKey);
         logger.info("Fetching weather data from URL: {}", url);
         String response = restTemplate.getForObject(url, String.class);
@@ -39,7 +39,7 @@ public class WeatherApi {
             return weather;
         } catch (Exception e) {
             logger.error("Error parsing weather data", e);
-            return null;
+            throw e;
         }
     }
 }
