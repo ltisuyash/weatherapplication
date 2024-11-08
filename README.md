@@ -1,2 +1,2 @@
 # Weather App
-Start with repo
+Fetch weather report
