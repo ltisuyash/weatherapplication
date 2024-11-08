@@ -15,11 +15,11 @@ public class WeatherController {
     private WeatherService weatherService;
 
     @GetMapping("/weather/{city}")
-    public Weather fetchAndSaveWeather(@PathVariable String city) {
+    public Weather fetchAndSaveWeather(@PathVariable String city) throws Exception {
         try {
             return weatherService.fetchAndSaveWeather(city);
         } catch (Exception e) {
-            throw new RuntimeException("Error occured: " + e.getMessage());
+            throw e;
         }
     }
 }
