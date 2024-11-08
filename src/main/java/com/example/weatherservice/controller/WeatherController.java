@@ -19,7 +19,7 @@ public class WeatherController {
         try {
             return weatherService.fetchAndSaveWeather(city);
         } catch (Exception e) {
-            throw new RuntimeException("Error: " + e.getMessage());
+            throw new RuntimeException("Error occured: " + e.getMessage());
         }
     }
 }
